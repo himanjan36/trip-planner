@@ -1,7 +1,18 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.database import supabase
+from app.services.recommendation_service import get_recommendations
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -92,3 +103,17 @@ def get_destination(destination_id: str):
         "weather_profiles": weather_profiles.data,
         "travel_requirements": travel_requirements.data
     }
+@app.get("/recommendations")
+def recommendations(
+    interests: str,
+    budget: str,
+    days: int
+):
+
+    interest_list = interests.split(",")
+
+    return get_recommendations(
+        interest_list,
+        budget,
+        days
+    )
