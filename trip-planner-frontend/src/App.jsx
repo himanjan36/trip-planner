@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import DestinationCard from "./components/DestinationCard";
 import RecommendationForm from "./components/RecommendationForm";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 function App() {
   const [destinations, setDestinations] = useState([]);
@@ -29,7 +30,7 @@ function App() {
     useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:8000/destinations")
+    fetch(`${API_URL}/destinations`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(
@@ -115,7 +116,7 @@ function App() {
       setRecommendationLoading(true);
 
       const response = await fetch(
-        `http://localhost:8000/recommendations?interests=${recommendInterest}&budget=${recommendBudget}&days=${recommendDays}`
+        `${API_URL}/recommendations?interests=${recommendInterest}&budget=${recommendBudget}&days=${recommendDays}`
       );
 
       const data = await response.json();
