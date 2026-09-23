@@ -7,7 +7,8 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173"
+        "http://localhost:5173",
+        "https://trip-planner-henna-rho.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
